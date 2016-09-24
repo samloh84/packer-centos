@@ -10,15 +10,16 @@
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_password": "{{ user `ssh_password` }}",
       "ssh_timeout": "{{ user `ssh_timeout` }}",
-      "boot_command": "<tab> inst.ks=hd:fd0:/{{ user `kickstart_name` }} <enter><wait>",
+      "boot_command": "<tab> inst.ks=hd:fd0:/{{ user `kickstart` }} <enter><wait>",
       "disk_size": "{{ user `disk_size` }}",
-      "floppy_files": "{{ user `floppy_files` }}",
+      "floppy_files": [
+        "floppy/{{ user `vm_name` }}/{{ user `kickstart` }}"
+      ],
       "guest_os_type": "{{ user `virtualbox_guest_os_type` }}",
       "ssh_port": "{{ user `ssh_port` }}",
       "output_directory": "output/{{ build_type }}/{{ user `vm_name` }}",
       "shutdown_command": "{{ user `shutdown_command` }}",
       "vm_name": "{{ user `vm_name` }}",
-      "vmdk_name": "{{ user `vm_name` }}",
       "vboxmanage": [
         [
           "modifyvm",
@@ -43,12 +44,13 @@
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_password": "{{ user `ssh_password` }}",
       "ssh_timeout": "{{ user `ssh_timeout` }}",
-      "boot_command": "<tab> inst.ks=hd:fd0:/{{ user `kickstart_name` }} <enter><wait>",
+      "boot_command": "<tab> inst.ks=hd:fd0:/{{ user `kickstart` }} <enter><wait>",
       "disk_size": "{{ user `disk_size` }}",
       "disk_type_id": "0",
-      "floppy_files": "{{ user `floppy_files` }}",
-      "virtualbox_guest_os_type": "centos-64",
-      "vmware_guest_os_type": "{{ user `vmware_guest_os_type` }}",
+      "floppy_files": [
+        "floppy/{{ user `vm_name` }}/{{ user `kickstart` }}"
+      ],
+      "guest_os_type": "{{ user `vmware_guest_os_type` }}",
       "output_directory": "output/{{ build_type }}/{{ user `vm_name` }}",
       "shutdown_command": "{{ user `shutdown_command` }}",
       "vm_name": "{{ user `vm_name` }}",
