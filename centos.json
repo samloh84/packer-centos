@@ -1,5 +1,5 @@
 {
-  "_comment": "Base template. Run by executing packer -var-file=<variable_file>",
+  "_comment": "Base template. Run by executing packer -var-file=<variable_file> centos.json",
   "builders": [
     {
       "type": "virtualbox-iso",
