@@ -3,20 +3,7 @@
   "iso_checksum": "9ed9ffb5d89ab8cca834afce354daa70a21dcb410f58287d6316259ff89758f5",
   "iso_url": "http://download.nus.edu.sg/mirror/centos/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1511.iso",
   "iso_name": "CentOS-7-x86_64-NetInstall-1511.iso",
-  "iso_path": "iso",
-  "ssh_username": "vagrant",
-  "ssh_password": "vagrant",
-  "ssh_port": "22",
-  "ssh_timeout": "60m",
-  "disk_size": "204800",
-  "virtualbox_guest_os_type": "RedHat_64",
-  "vmware_guest_os_type": "centos-64",
-  "vm_name": "centos-7-workstation",
-  "memory": "2048",
-  "cpus": "2",
-  "shutdown_command": "sudo shutdown -h now",
-  "kickstart": "anaconda-ks.cfg",
-  "headless": "false"
+  "vm_name": "centos-7-workstation"
 }
 
 
