@@ -1,3 +1,5 @@
+@echo off
+
 REM To force build, add -force to arguments
 REM To build for only one builder, add -only=virtualbox-iso or -only=vmware-iso
 
@@ -32,10 +34,28 @@ goto loop1
 
 :after_loop
 pushd ..
-IF DEFINED CENTOS7SERVER ( packer.exe build -var-file=centos-7-server.json %RESTVAR% centos.json )
-IF DEFINED CENTOS7WORKSTATION ( packer.exe build -var-file=centos-7-workstation.json %RESTVAR% centos.json )
-IF DEFINED CENTOS6SERVER ( packer.exe build -var-file=centos-6-server.json %RESTVAR% centos.json )
-IF DEFINED CENTOS6WORKSTATION ( packer.exe build -var-file=centos-6-workstation.json %RESTVAR% centos.json )
-IF DEFINED CENTOS5SERVER ( packer.exe build -var-file=centos-5-server.json %RESTVAR% centos.json )
-IF DEFINED CENTOS5WORKSTATION ( packer.exe build -var-file=centos-5-workstation.json %RESTVAR% centos.json )
+IF DEFINED CENTOS7SERVER (
+packer.exe build -var-file=centos-7-server.json %RESTVAR% centos.json
+ovftool.exe output\vmware-iso\centos-7-server.vmx output\centos-7-server.ova
+)
+IF DEFINED CENTOS7WORKSTATION (
+packer.exe build -var-file=centos-7-workstation.json %RESTVAR% centos.json
+ ovftool.exe output\vmware-iso\centos-7-workstation.vmx output\centos-7-workstation.ova
+)
+IF DEFINED CENTOS6SERVER (
+packer.exe build -var-file=centos-6-server.json %RESTVAR% centos.json
+ovftool.exe output\vmware-iso\centos-7-server.vmx output\centos-7-server.ova
+)
+IF DEFINED CENTOS6WORKSTATION (
+packer.exe build -var-file=centos-6-workstation.json %RESTVAR% centos.json
+ovftool.exe output\vmware-iso\centos-6-workstation.vmx output\centos-6-workstation.ova
+)
+IF DEFINED CENTOS5SERVER (
+packer.exe build -var-file=centos-5-server.json %RESTVAR% centos.json
+ovftool.exe output\vmware-iso\centos-5-server.vmx output\centos-5-server.ova
+)
+IF DEFINED CENTOS5WORKSTATION (
+packer.exe build -var-file=centos-5-workstation.json %RESTVAR% centos.json
+ovftool.exe output\vmware-iso\centos-5-workstation.vmx output\centos-5-workstation.ova
+)
 popd

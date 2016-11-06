@@ -69,7 +69,8 @@
       },
       "vmx_data_post": {
         "ethernet0.connectionType": "bridged"
-      }
+      },
+      "tools_upload_flavor": ""
     }
   ],
   "post-processors": [
@@ -92,7 +93,7 @@
     "vmware_guest_os_type": "centos-64",
     "memory": "2048",
     "cpus": "2",
-    "shutdown_command": "sudo shutdown -h now",
+    "shutdown_command": "sudo /sbin/shutdown -P now",
     "kickstart": "anaconda-ks.cfg",
     "headless": "false"
   }
