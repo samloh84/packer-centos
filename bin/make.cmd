@@ -15,7 +15,8 @@ SET ONLY_VMWARE_ISO=0
 SET ONLY_VIRTUALBOX_ISO=0
 
 
-SET REST_ARGS=
+SET BUILDER_ARGS=
+SET ON_ERROR_ARGS=
 
 :GETOPTS
 
@@ -81,15 +82,19 @@ IF /I "%~1" == "centos-5-workstation" (
 )
 
 IF /I "%~1" == "vmware-iso" (
-	SET ONLY_VMWARE_ISO=1
+	SET BUILDER_ARGS=-only=vmware-iso
 	SET OPTS_MATCHED=1
 )
 
 IF /I "%~1" == "virtualbox-iso" (
-	SET ONLY_VIRTUALBOX_ISO=1
+	SET BUILDER_ARGS=-only=virtualbox-iso
 	SET OPTS_MATCHED=1
 )
 
+IF /I "%~1" == "abort" (
+	SET ON_ERROR_ARGS=-on-error=abort
+	SET OPTS_MATCHED=1
+)
 
 SHIFT
 IF %OPTS_MATCHED% EQU 1 (
@@ -117,7 +122,7 @@ IF %ONLY_VIRTUALBOX_ISO% EQU 1 (
 
 
 echo NO_OPTS=%NO_OPTS%
-echo REST_ARGS=%REST_ARGS%
+echo REST_ARGS=%BUILDER_ARGS% %ON_ERROR_ARGS% 
 
 echo CENTOS_7_SERVER=%CENTOS_7_SERVER%
 echo CENTOS_7_WORKSTATION=%CENTOS_7_WORKSTATION%
@@ -130,29 +135,29 @@ echo CENTOS_5_WORKSTATION=%CENTOS_5_WORKSTATION%
 
 pushd ..
 IF %CENTOS_7_SERVER% EQU 1 (
-	packer.exe build -force -var-file=centos-7-server.json %REST_ARGS% centos.json
+	packer.exe build -force -var-file=centos-7-server.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
 	ovftool.exe --overwrite output\vmware-iso\centos-7-server\centos-7-server.vmx output\centos-7-server.ova
 )
 IF %CENTOS_7_WORKSTATION% EQU 1 (
-	packer.exe build -force -var-file=centos-7-workstation.json %REST_ARGS% centos.json
+	packer.exe build -force -var-file=centos-7-workstation.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
 	ovftool.exe --overwrite output\vmware-iso\centos-7-workstation\centos-7-workstation.vmx output\centos-7-workstation.ova
 )
 
 IF %CENTOS_6_SERVER% EQU 1 (
-	packer.exe build -force -var-file=centos-6-server.json %REST_ARGS% centos.json
+	packer.exe build -force -var-file=centos-6-server.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
 	ovftool.exe --overwrite output\vmware-iso\centos-6-server\centos-6-server.vmx output\centos-6-server.ova
 )
 IF %CENTOS_6_WORKSTATION% EQU 1 (
-	packer.exe build -force -var-file=centos-6-workstation.json %REST_ARGS% centos.json
+	packer.exe build -force -var-file=centos-6-workstation.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
 	ovftool.exe --overwrite output\vmware-iso\centos-6-workstation\centos-6-workstation.vmx output\centos-6-workstation.ova
 )
 
 IF %CENTOS_5_SERVER% EQU 1 (
-	packer.exe build -force -var-file=centos-5-server.json %REST_ARGS% centos.json
+	packer.exe build -force -var-file=centos-5-server.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
 	ovftool.exe --overwrite output\vmware-iso\centos-5-server\centos-5-server.vmx output\centos-5-server.ova
 )
 IF %CENTOS_5_WORKSTATION% EQU 1 (
-	packer.exe build -force -var-file=centos-5-workstation.json %REST_ARGS% centos.json
+	packer.exe build -force -var-file=centos-5-workstation.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
 	ovftool.exe --overwrite output\vmware-iso\centos-5-workstation\centos-5-workstation.vmx output\centos-5-workstation.ova
 )
 popd
