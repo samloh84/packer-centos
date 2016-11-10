@@ -136,6 +136,7 @@ echo CENTOS_5_WORKSTATION=%CENTOS_5_WORKSTATION%
 pushd ..
 IF %CENTOS_7_SERVER% EQU 1 (
 	packer.exe build -force -var-file=centos-7-server.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
+
 	ovftool.exe --overwrite output\vmware-iso\centos-7-server\centos-7-server.vmx output\centos-7-server.ova
 )
 IF %CENTOS_7_WORKSTATION% EQU 1 (

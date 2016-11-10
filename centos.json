@@ -52,7 +52,7 @@
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_password": "{{ user `ssh_password` }}",
       "ssh_timeout": "{{ user `ssh_timeout` }}",
-      "boot_command": "<tab> ks=hd:fd0:/{{ user `kickstart` }} <enter><wait>",
+      "boot_command": "<tab> text ks=hd:fd0:/{{ user `kickstart` }} <enter><wait>",
       "disk_size": "{{ user `disk_size` }}",
       "disk_type_id": "0",
       "floppy_files": [
