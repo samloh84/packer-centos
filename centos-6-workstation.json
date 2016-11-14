@@ -3,7 +3,8 @@
   "iso_checksum": "56d9cc5757ed1443af7b321967622a108978328f72e58050d31bcf1998dfd162",
   "iso_url": "http://download.nus.edu.sg/mirror/centos/6/isos/x86_64/CentOS-6.8-x86_64-netinstall.iso",
   "iso_name": "CentOS-6.8-x86_64-netinstall.iso",
-  "vm_name": "centos-6-workstation"
+  "vm_name": "centos-6-workstation",
+  "graphics_enabled": "TRUE"
 }
 
 
