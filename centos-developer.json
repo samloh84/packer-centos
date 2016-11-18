@@ -1,0 +1,72 @@
+{
+  "_comment": "Base template. Run by executing packer build -var-file=<variable_file> centos-developer.json",
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "output/virtualbox-iso/{{ user `vm_name` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "output_directory": "output/{{ build_type }}/{{ user `vm_name` }}-developer",
+      "shutdown_command": "{{ user `shutdown_command` }}"
+    },
+    {
+      "type": "vmware-vmx",
+      "source_path": "output/vmware-iso/{{ user `vm_name` }}/{{ user `vm_name` }}.vmx",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "output_directory": "output/{{ build_type }}/{{ user `vm_name` }}-developer",
+      "shutdown_command": "{{ user `shutdown_command` }}",
+      "vmx_data": {
+        "ethernet0.connectionType": "nat"
+      },
+      "vmx_data_post": {
+        "ethernet0.connectionType": "bridged"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "ansible/requirements.yml",
+      "destination": "/root/requirements.yml"
+    },
+    {
+      "type": "file",
+      "source": "ansible/ansible.yml",
+      "destination": "/root/ansible.yml"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "ansible-galaxy install -r /root/requirements.yml",
+        "ansible-playbook /root/ansible.yml"
+      ],
+      "remote_folder": "/root"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "compression_level": "{{user `compression_level`}}",
+      "output": "output/{{ user `vm_name` }}.{{ build_type }}.box"
+    }
+  ],
+  "variables": {
+    "compression_level": "9",
+    "iso_path": "iso",
+    "ssh_username": "root",
+    "ssh_password": "vagrant",
+    "ssh_port": "22",
+    "ssh_timeout": "60m",
+    "disk_size": "204800",
+    "virtualbox_guest_os_type": "RedHat_64",
+    "vmware_guest_os_type": "centos-64",
+    "memory": "2048",
+    "cpus": "2",
+    "shutdown_command": "sudo /sbin/shutdown -P now",
+    "kickstart": "anaconda-ks.cfg",
+    "headless": "false",
+    "graphics_enabled": "FALSE"
+  }
+}
