@@ -156,7 +156,7 @@ IF %CENTOS_7_WORKSTATION% EQU 1 (
 )
 IF %CENTOS_7_DEVELOPMENT_WORKSTATION% EQU 1 (
 	packer.exe build -force -var-file=centos-7-workstation.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos-development.json
-	ovftool.exe --overwrite output\vmware-iso\centos-7-workstation\centos-7-workstation.vmx output\centos-7-workstation.ova
+	ovftool.exe --overwrite output\developer\vmware-iso\centos-7-workstation\centos-7-workstation.vmx output\developer\centos-7-workstation.ova
 )
 
 
