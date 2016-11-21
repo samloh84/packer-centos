@@ -3,5 +3,7 @@
   "iso_checksum": "9729c04a8a3ba57ed4e34ee5b96522879e6a3bcbf5582c3b6bcfd02bcfbacf8c",
   "iso_url": "http://download.nus.edu.sg/mirror/centos/5/isos/x86_64/CentOS-5.11-x86_64-netinstall.iso",
   "iso_name": "CentOS-5.11-x86_64-netinstall.iso",
-  "vm_name": "centos-5-server"
+  "linux_distribution":"centos",
+  "linux_distribution_version": "5",
+  "install_type": "server"
 }

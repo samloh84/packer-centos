@@ -3,5 +3,8 @@
   "iso_checksum": "9ed9ffb5d89ab8cca834afce354daa70a21dcb410f58287d6316259ff89758f5",
   "iso_url": "http://download.nus.edu.sg/mirror/centos/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1511.iso",
   "iso_name": "CentOS-7-x86_64-NetInstall-1511.iso",
+  "linux_distribution":"centos",
+  "linux_distribution_version": "7",
+  "install_type": "server",
   "vm_name": "centos-7-server"
 }

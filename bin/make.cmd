@@ -64,8 +64,8 @@ IF /I "%~1" == "centos-7-workstation" (
 	SET OPTS_MATCHED=1
 )
 
-IF /I "%~1" == "centos-7-development-workstation" (
-	SET CENTOS_7_DEVELOPMENT_WORKSTATION=1
+IF /I "%~1" == "centos-7-developer-workstation" (
+	SET CENTOS_7_DEVELOPER_WORKSTATION=1
 	SET OPTS_MATCHED=1
 )
 
@@ -115,7 +115,7 @@ IF /I NOT "%~1" == "" GOTO GETOPTS
 IF %NO_OPTS% EQU 1 (
 	SET CENTOS_7_SERVER=1
     SET CENTOS_7_WORKSTATION=1
-    SET CENTOS_7_DEVELOPMENT_WORKSTATION=1
+    SET CENTOS_7_DEVELOPER_WORKSTATION=1
     SET CENTOS_6_SERVER=1
     SET CENTOS_6_WORKSTATION=1
     SET CENTOS_5_SERVER=1
@@ -136,7 +136,7 @@ echo REST_ARGS=%BUILDER_ARGS% %ON_ERROR_ARGS%
 
 echo CENTOS_7_SERVER=%CENTOS_7_SERVER%
 echo CENTOS_7_WORKSTATION=%CENTOS_7_WORKSTATION%
-echo CENTOS_7_DEVELOPMENT_WORKSTATION=%CENTOS_7_DEVELOPMENT_WORKSTATION%
+echo CENTOS_7_DEVELOPER_WORKSTATION=%CENTOS_7_DEVELOPER_WORKSTATION%
 
 echo CENTOS_6_SERVER=%CENTOS_6_SERVER%
 echo CENTOS_6_WORKSTATION=%CENTOS_6_WORKSTATION%
@@ -154,9 +154,9 @@ IF %CENTOS_7_WORKSTATION% EQU 1 (
 	packer.exe build -force -var-file=centos-7-workstation.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
 	ovftool.exe --overwrite output\vmware-iso\centos-7-workstation\centos-7-workstation.vmx output\centos-7-workstation.ova
 )
-IF %CENTOS_7_DEVELOPMENT_WORKSTATION% EQU 1 (
-	packer.exe build -force -var-file=centos-7-workstation.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos-development.json
-	ovftool.exe --overwrite output\developer\vmware-iso\centos-7-workstation\centos-7-workstation.vmx output\developer\centos-7-workstation.ova
+IF %CENTOS_7_DEVELOPER_WORKSTATION% EQU 1 (
+	packer.exe build -force -var-file=centos-7-workstation.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos-developer.json
+	ovftool.exe --overwrite output\vmware-iso\centos-7-developer-workstation\centos-7-developer-workstation.vmx output\centos-7-developer-workstation.ova
 )
 
 
