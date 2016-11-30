@@ -88,7 +88,7 @@
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "ssh_port": "22",
-    "ssh_timeout": "60m",
+    "ssh_timeout": "600m",
     "disk_size": "204800",
     "virtualbox_guest_os_type": "RedHat_64",
     "vmware_guest_os_type": "centos-64",
