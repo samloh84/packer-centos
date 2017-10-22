@@ -1,4 +1,5 @@
 @echo off
+SETLOCAL EnableDelayedExpansion
 
 REM To force build, add -force to arguments
 REM To build for only one builder, add -only=virtualbox-iso or -only=vmware-iso
@@ -144,37 +145,47 @@ echo CENTOS_6_WORKSTATION=%CENTOS_6_WORKSTATION%
 echo CENTOS_5_SERVER=%CENTOS_5_SERVER%
 echo CENTOS_5_WORKSTATION=%CENTOS_5_WORKSTATION%
 
-pushd ..
-IF %CENTOS_7_SERVER% EQU 1 (
-	packer.exe build -force -var-file=centos-7-server.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
+SET LINUX_DISTRIBUTION=centos
+SET BUILD_TYPE=vmware-iso
 
-	ovftool.exe --overwrite output\vmware-iso\centos-7-server\centos-7-server.vmx output\centos-7-server.ova
+pushd ..
+
+IF %CENTOS_7_SERVER% EQU 1 (
+    SET LINUX_DISTRIBUTION_VERSION=7
+    SET INSTALL_TYPE=server
+	packer.exe build -force -var-file=%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
+	ovftool.exe --overwrite output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!-%BUILD_TYPE%\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.vmx output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.ova
 )
 IF %CENTOS_7_WORKSTATION% EQU 1 (
-	packer.exe build -force -var-file=centos-7-workstation.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
-	ovftool.exe --overwrite output\vmware-iso\centos-7-workstation\centos-7-workstation.vmx output\centos-7-workstation.ova
+    SET LINUX_DISTRIBUTION_VERSION=7
+    SET INSTALL_TYPE=workstation
+	packer.exe build -force -var-file=%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
+	ovftool.exe --overwrite output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!-%BUILD_TYPE%\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.vmx output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.ova
 )
 IF %CENTOS_7_DEVELOPER_WORKSTATION% EQU 1 (
-	packer.exe build -force -var-file=centos-7-workstation.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos-developer.json
-	ovftool.exe --overwrite output\vmware-iso\centos-7-developer-workstation\centos-7-developer-workstation.vmx output\centos-7-developer-workstation.ova
+    SET LINUX_DISTRIBUTION_VERSION=7
+    SET INSTALL_TYPE=workstation
+    packer.exe build -force -var-file=%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-developer-!INSTALL_TYPE!.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
+    ovftool.exe --overwrite output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-developer-!INSTALL_TYPE!-%BUILD_TYPE%\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-developer-!INSTALL_TYPE!.vmx output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-developer-!INSTALL_TYPE!.ova
 )
+
 
 
 IF %CENTOS_6_SERVER% EQU 1 (
-	packer.exe build -force -var-file=centos-6-server.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
-	ovftool.exe --overwrite output\vmware-iso\centos-6-server\centos-6-server.vmx output\centos-6-server.ova
+    SET LINUX_DISTRIBUTION_VERSION=6
+    SET INSTALL_TYPE=server
+	packer.exe build -force -var-file=%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
+	ovftool.exe --overwrite output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!-%BUILD_TYPE%\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.vmx output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.ova
 )
 IF %CENTOS_6_WORKSTATION% EQU 1 (
-	packer.exe build -force -var-file=centos-6-workstation.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
-	ovftool.exe --overwrite output\vmware-iso\centos-6-workstation\centos-6-workstation.vmx output\centos-6-workstation.ova
+    SET LINUX_DISTRIBUTION_VERSION=6
+    SET INSTALL_TYPE=workstation
+	packer.exe build -force -var-file=%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
+	ovftool.exe --overwrite output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!-%BUILD_TYPE%\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.vmx output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-!INSTALL_TYPE!.ova
 )
-
-IF %CENTOS_5_SERVER% EQU 1 (
-	packer.exe build -force -var-file=centos-5-server.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
-	ovftool.exe --overwrite output\vmware-iso\centos-5-server\centos-5-server.vmx output\centos-5-server.ova
-)
-IF %CENTOS_5_WORKSTATION% EQU 1 (
-	packer.exe build -force -var-file=centos-5-workstation.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
-	ovftool.exe --overwrite output\vmware-iso\centos-5-workstation\centos-5-workstation.vmx output\centos-5-workstation.ova
-)
-popd
+IF %CENTOS_6_DEVELOPER_WORKSTATION% EQU 1 (
+    SET LINUX_DISTRIBUTION_VERSION=6
+    SET INSTALL_TYPE=workstation
+    packer.exe build -force -var-file=%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-developer-!INSTALL_TYPE!.json %BUILDER_ARGS% %ON_ERROR_ARGS% centos.json
+    ovftool.exe --overwrite output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-developer-!INSTALL_TYPE!-%BUILD_TYPE%\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-developer-!INSTALL_TYPE!.vmx output\%LINUX_DISTRIBUTION%-!LINUX_DISTRIBUTION_VERSION!-developer-!INSTALL_TYPE!.ova
+)popd
