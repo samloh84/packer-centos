@@ -1,0 +1,5 @@
+iso_url="http://download.nus.edu.sg/mirror/centos/8.1.1911/isos/x86_64/CentOS-8.1.1911-x86_64-boot.iso"
+iso_filename="CentOS-8.1.1911-x86_64-boot.iso"
+iso_checksum="7fea13202bf2f26989df4175aace8fdc16e1137f7961c33512cbfad844008948"
+distribution_major_version="8"
+distribution_variant="workstation"
