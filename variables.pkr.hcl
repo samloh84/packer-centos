@@ -144,6 +144,16 @@ variable "virtualbox_format" {
   default = "ova"
 }
 
+variable "shell_scripts" {
+  type = list(string)
+  default = []
+}
+
+variable "shell_environment_vars" {
+  type = list(string)
+  default = []
+}
+
 locals {
   vm_name = join("-", [for name_component in [
     var.distribution,
@@ -152,5 +162,14 @@ locals {
   iso_path = coalesce(var.iso_path, "${var.working_folder}/${var.iso_folder}/${var.iso_filename}")
   http_directory = coalesce(var.http_directory, "./${var.http_folder}/${local.vm_name}")
   output_directory = coalesce(var.output_directory, "${var.working_folder}/${var.output_folder}/{{ build_type }}/${local.vm_name}")
+  shell_scripts = concat(var.shell_scripts, [
+    "scripts/cleanup.sh"])
+  shell_environment_vars = concat(var.shell_environment_vars, [
+    "DISTRIBUTION=${var.distribution}",
+    "DISTRIBUTION_MAJOR_VERSION=${var.distribution_major_version}",
+    "DISTRIBUTION_VARIANT=${var.distribution_variant}",
+    "SSH_USERNAME=${var.ssh_username}",
+    "SSH_PASSWORD=${var.ssh_password}",
+  ])
 }
 

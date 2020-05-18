@@ -1,7 +1,7 @@
 @echo off
 
 if "%~f1" == "" (
-    for /f %%G in ('dir /b *.pkrvars.hcl ^| findstr "fedora-"') do (
+    for /f %%G in ('dir /b *.pkrvars.hcl ^| findstr "centos-"') do (
         CALL :packer_build "%%G"
     )
 ) else (
@@ -11,5 +11,5 @@ if "%~f1" == "" (
 GOTO :eof
 
 :packer_build
-packer build -force -var-file "%*" -only="vmware-iso.fedora" .
+packer build -force -var-file "%*" -only="vmware-iso.centos" .
 EXIT /B %ERRORLEVEL%
