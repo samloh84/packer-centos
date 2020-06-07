@@ -12,9 +12,9 @@ variable "iso_folder" {
   type = string
   default = "iso"
 }
-variable "http_folder" {
+variable "kickstart_folder" {
   type = string
-  default = "http"
+  default = "kickstart"
 }
 
 variable "output_folder" {
@@ -76,7 +76,7 @@ variable "distribution_variant" {
 }
 
 
-variable "http_directory" {
+variable "kickstart_directory" {
   type = string
   default = null
 }
@@ -160,7 +160,7 @@ locals {
     var.distribution_major_version,
     var.distribution_variant]: name_component if name_component!=null && name_component!=""])
   iso_path = coalesce(var.iso_path, "${var.working_folder}/${var.iso_folder}/${var.iso_filename}")
-  http_directory = coalesce(var.http_directory, "./${var.http_folder}/${local.vm_name}")
+  kickstart_directory = coalesce(var.kickstart_directory, "./${var.kickstart_folder}/${local.vm_name}")
   output_directory = coalesce(var.output_directory, "${var.working_folder}/${var.output_folder}/{{ build_type }}/${local.vm_name}")
   shell_scripts = concat(var.shell_scripts, [
     "scripts/cleanup.sh"])
